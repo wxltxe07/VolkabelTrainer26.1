@@ -13,6 +13,7 @@
         android:layout_height="87dp"
         android:text="Lerne"
         android:textSize="40sp"
+        android:textStyle="bold"
         android:backgroundTint="#3052c2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
