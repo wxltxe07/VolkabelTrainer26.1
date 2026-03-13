@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,48 +12,41 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+public class NewVocabMenu1Activity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
-
-    private Button lerneBtn;
-    private TextView vokabelText;
-    private FloatingActionButton plusBtn;
-
+    private Button addBtn;
+    private Button returnBtn;
+    private EditText germanTxt;
+    private EditText otherTxt;
     private DbHelper db = new DbHelper(this);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-
-        vokabelText = findViewById(R.id.textView);
-        lerneBtn = findViewById(R.id.button);
-        plusBtn = findViewById(R.id.floatingActionButton);
+        setContentView(R.layout.new_vocab_menu1);
 
 
-        plusBtn.setOnClickListener(new View.OnClickListener() {
+        addBtn = findViewById(R.id.button2);
+        returnBtn = findViewById(R.id.button3);
+        germanTxt = findViewById(R.id.editTextText);
+        otherTxt = findViewById(R.id.editTextText1);
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NewVocabMenu1Activity.class);
+                db.addVocab(germanTxt.getText().toString(),otherTxt.getText().toString());
+            }
+        });
+
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewVocabMenu1Activity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
-
-
-
-        //nächste mehtode zum testen
-        lerneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vokabelText.setText(db.readGerman(4));
-
-            }
-        });
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main2), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
