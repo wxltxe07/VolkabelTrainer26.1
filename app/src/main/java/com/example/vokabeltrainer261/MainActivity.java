@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button lerneBtn;
     private TextView vokabelText;
-    private TextView trainerText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        vokabelText = (TextView) findViewById(R.id.textView);
+       /* vokabelText = (TextView) findViewById(R.id.textView);
         lerneBtn = (Button) findViewById(R.id.button);
         lerneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             vokabelText.setText("Test bestanden");
             }
-        });
+        });*/
 
 
 
