@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         lerneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            vokabelText.setText("Test nicht bestanden");
+            vokabelText.setText("Test nich bestanden");
             }
         });*/
 
