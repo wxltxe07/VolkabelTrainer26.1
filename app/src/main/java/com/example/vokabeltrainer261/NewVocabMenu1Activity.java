@@ -36,6 +36,8 @@ public class NewVocabMenu1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.addVocab(germanTxt.getText().toString(),otherTxt.getText().toString());
+                germanTxt.setText("");
+                otherTxt.setText("");
             }
         });
 
