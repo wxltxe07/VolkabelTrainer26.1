@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button lerneBtn;
     private TextView vokabelText;
+    private TextView trainerText;
     private FloatingActionButton plusBtn;
 
     private DbHelper db = new DbHelper(this);
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         vokabelText = findViewById(R.id.textView);
+        trainerText = findViewById(R.id.textView1);
         lerneBtn = findViewById(R.id.button);
         plusBtn = findViewById(R.id.floatingActionButton);
 
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 vokabelText.setText(db.readGerman(4));
+                trainerText.setText(db.readOther(4));
 
             }
         });
