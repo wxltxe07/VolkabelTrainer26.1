@@ -65,4 +65,23 @@ public class DbHelper extends SQLiteOpenHelper {
 
         return germanWord;
     }
+
+    public String readOther(int id){
+        String otherWord = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT other FROM Vocabs WHERE id = ?",
+                new String[]{String.valueOf(id)}
+        );
+
+        if (cursor.moveToFirst()) {
+            otherWord = cursor.getString(cursor.getColumnIndexOrThrow("other"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return otherWord;
+    }
 }
