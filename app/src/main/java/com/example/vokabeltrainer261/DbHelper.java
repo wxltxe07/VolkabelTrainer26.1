@@ -69,6 +69,27 @@ public class DbHelper extends SQLiteOpenHelper {
         return germanWord;
     }
 
+    public int readAmount(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int amount = 0;
+
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Vocabs", null);
+
+        if (cursor.moveToFirst()) {
+            amount = cursor.getInt(0);
+        }
+
+        cursor.close();
+
+
+        db.close();
+
+        return amount;
+    }
+
+
     public String readOther(int id){
         String otherWord = null;
         SQLiteDatabase db = this.getReadableDatabase();

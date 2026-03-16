@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VokabelTrainer261">
         <activity
-            android:name=".editList"
-            android:exported="false" />
-        <activity
             android:name=".NewVocabMenu1Activity"
             android:exported="false" />
         <activity
