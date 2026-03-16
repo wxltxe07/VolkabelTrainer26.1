@@ -19,6 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         String createTable =
                 "CREATE TABLE IF NOT EXISTS Vocabs (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -26,7 +27,9 @@ public class DbHelper extends SQLiteOpenHelper {
                         "other TEXT NOT NULL," +
                         "lektion INTEGER DEFAULT 0," +
                         "score INTEGER DEFAULT 0)";
+
         db.execSQL(createTable);
+        db.close();
     }
 
     @Override
