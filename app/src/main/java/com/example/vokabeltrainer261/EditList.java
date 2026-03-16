@@ -18,7 +18,7 @@ import java.util.List;
 
 
 
-public class editList extends AppCompatActivity {
+public class EditList extends AppCompatActivity {
     private Button returnBtn2;
 
     @Override
@@ -33,7 +33,7 @@ public class editList extends AppCompatActivity {
         returnBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(editList.this, MainActivity.class);
+                Intent intent = new Intent(EditList.this, MainActivity.class);
                 startActivity(intent);
             }
         });

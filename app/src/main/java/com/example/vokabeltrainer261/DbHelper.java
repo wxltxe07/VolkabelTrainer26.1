@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         "score INTEGER DEFAULT 0)";
 
         db.execSQL(createTable);
-        db.close();
+
     }
 
     @Override
