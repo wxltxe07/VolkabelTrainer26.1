@@ -18,18 +18,18 @@ public class LearnVocabActivity extends AppCompatActivity {
     private Button backBtn;
     private Button nextBtn;
     private TextView vokabelText;
-    private DbHelper db = new DbHelper(this);
+
 
     private int a = 0;
     private boolean deutsch = false;
-
+    private DbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_learn_vocab);
-
+        db = new DbHelper(this);
 
         flipBtn = findViewById(R.id.buttonT6);
         nextBtn = findViewById(R.id.buttonT5);
@@ -44,7 +44,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         flipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (deutsch = false){
+               if (deutsch == false){
                    vokabelText.setText(db.readGerman(a));
                    deutsch = true;
                } else {

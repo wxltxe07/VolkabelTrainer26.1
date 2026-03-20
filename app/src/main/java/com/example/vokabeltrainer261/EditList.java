@@ -21,6 +21,10 @@ import java.util.List;
 public class EditList extends AppCompatActivity {
     private Button returnBtn2;
 
+    private Button updateBtn;
+
+    private List<Vocab> vocabList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,21 @@ public class EditList extends AppCompatActivity {
         setContentView(R.layout.activity_edit_list);
 
 
+        DbHelper db = new DbHelper(this);
+
         returnBtn2 = findViewById(R.id.button5);
+
+        updateBtn = findViewById(R.id.button6);
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < db.readAmount(); i++) {
+
+                    db.updateVocab(vocabList.get(i).getGerman(), vocabList.get(i).getOther(), i);
+                }
+            }
+        });
 
         returnBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,10 +55,10 @@ public class EditList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        List<Vocab> vocabList = new ArrayList<>();
 
 
-        for (int i = 0; i < 30; i++){
+
+        for (int i = 0; i < db.readAmount()+1; i++){
             vocabList.add(new Vocab(this, i));
         }
 

@@ -19,6 +19,17 @@ public class Vocab {
     }
 
     public String getGerman(){
+
         return german;
     }
+
+    public void setGerman(String g){
+        german = g;
+    }
+
+    public void setOther(String o){
+        german = o;
+    }
+
+
 }

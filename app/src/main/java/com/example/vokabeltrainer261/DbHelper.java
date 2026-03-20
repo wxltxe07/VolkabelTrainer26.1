@@ -50,6 +50,16 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateVocab (String german, String other, int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("german", german);
+        values.put("other", other);
+        db.update("Vocabs", values, "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
     public String readGerman(int id){
         String germanWord = null;
         SQLiteDatabase db = this.getReadableDatabase();

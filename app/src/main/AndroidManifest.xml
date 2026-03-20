@@ -16,6 +16,11 @@
             android:name=".NewVocabMenu1Activity"
             android:exported="false" />
 
+
+        <activity
+            android:name=".LearnVocabActivity"
+            android:exported="false" />
+
         <activity
             android:name=".EditList"
             android:exported="false" />

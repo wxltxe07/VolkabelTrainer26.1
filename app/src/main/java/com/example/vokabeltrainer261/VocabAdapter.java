@@ -3,6 +3,7 @@ package com.example.vokabeltrainer261;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,14 +23,14 @@ public class VocabAdapter extends RecyclerView.Adapter<VocabAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView otherWord;
-        TextView germanWord;
+        EditText otherWord;
+        EditText germanWord;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            otherWord = itemView.findViewById(R.id.otherWord);
             germanWord = itemView.findViewById(R.id.germanWord);
+            otherWord = itemView.findViewById(R.id.otherWord);
         }
     }
 
@@ -49,6 +50,32 @@ public class VocabAdapter extends RecyclerView.Adapter<VocabAdapter.ViewHolder> 
 
         holder.otherWord.setText(vocab.getOther());
         holder.germanWord.setText(vocab.getGerman());
+
+        holder.otherWord.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                vocab.setOther(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        holder.germanWord.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                vocab.setGerman(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {}
+        });
     }
 
     @Override
