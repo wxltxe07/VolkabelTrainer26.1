@@ -43,8 +43,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, EditList.class);
                 startActivity(intent);
             }
-
         });
+
+
+        lerneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LearnVocabActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

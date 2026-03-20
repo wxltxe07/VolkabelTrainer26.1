@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main4"
+    android:id="@+id/mainT4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LearnVocabActivity">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewT4"
         android:layout_width="138dp"
         android:layout_height="51dp"
         android:text="Sprache"
@@ -24,7 +24,7 @@
 
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonT4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="beenden"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.91" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonT5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="weiter"
@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.909" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonT6"
         android:layout_width="296dp"
         android:layout_height="84dp"
         android:backgroundTint="#3052c2"
@@ -75,7 +75,7 @@
         app:layout_constraintVertical_bias="0.355" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewT5"
         android:layout_width="331dp"
         android:layout_height="286dp"
         android:gravity="center"
