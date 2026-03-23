@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         fremdBtn = findViewById(R.id.radioButton2);
         zufallBtn = findViewById(R.id.radioButton3);
 
+        fremdBtn.setChecked(true);
+
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
