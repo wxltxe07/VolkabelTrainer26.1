@@ -110,13 +110,22 @@ public class DbHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             otherWord = cursor.getString(cursor.getColumnIndexOrThrow("other"));
+
+            cursor.close();
+            db.close();
+
+            return otherWord;
+
+
+        }else {
+            cursor.close();
+            db.close();
+
+            return null;
+
         }
-
-        cursor.close();
-        db.close();
-
-        return otherWord;
     }
+
 
     public void deleteVocab(int id){
         SQLiteDatabase db = this.getWritableDatabase();

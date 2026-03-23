@@ -44,29 +44,35 @@ public class LearnVocabActivity extends AppCompatActivity {
         flipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (deutsch == false){
-                   vokabelText.setText(db.readGerman(a));
-                   deutsch = true;
-               } else {
-                   vokabelText.setText(db.readOther(a));
-                   deutsch = false;
-
-               }
-
+                if (!deutsch){
+                    vokabelText.setText(db.readGerman(a));
+                    deutsch = true;
+                } else {
+                    vokabelText.setText(db.readOther(a));
+                    deutsch = false;
+                }
             }
-
         });
+
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                a ++;
-                vokabelText.setText(db.readOther(a));
-                deutsch = false;
 
+                String nextVokabel;
 
+                do {
+                    a++;
+                    nextVokabel = db.readOther(a);
+                } while (nextVokabel == null && a < 1000); // Sicherheitsgrenze
+
+                if (nextVokabel == null) {
+                    finish();
+                } else {
+                    vokabelText.setText(nextVokabel);
+                    deutsch = false;
+                }
             }
-
         });
 
 
