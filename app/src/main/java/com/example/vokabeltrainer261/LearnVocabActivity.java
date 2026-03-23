@@ -38,7 +38,22 @@ public class LearnVocabActivity extends AppCompatActivity {
         vokabelText = findViewById(R.id.textViewT5);
 
 
-        vokabelText.setText(db.readOther(a));
+        String ersteVokabel;
+
+// suche erste vorhandene Vokabel (falls ID 0 leer ist)
+        do {
+            ersteVokabel = db.readOther(a);
+            if (ersteVokabel == null) {
+                a++;
+            }
+        } while (ersteVokabel == null && a < 1000);
+
+        if (ersteVokabel == null) {
+
+            finish();
+        } else {
+            vokabelText.setText(ersteVokabel);
+        }
 
 
         flipBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +79,7 @@ public class LearnVocabActivity extends AppCompatActivity {
                 do {
                     a++;
                     nextVokabel = db.readOther(a);
-                } while (nextVokabel == null && a < 1000); // Sicherheitsgrenze
+                } while (nextVokabel == null && a < 1000);
 
                 if (nextVokabel == null) {
                     finish();
