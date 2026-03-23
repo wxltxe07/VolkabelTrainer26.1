@@ -3,7 +3,10 @@ package com.example.vokabeltrainer261;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton plusBtn;
     private FloatingActionButton editListBtn;
 
+    private Spinner spinner;
+
     private DbHelper db = new DbHelper(this);
+
+    static String language;
+
+    private RadioGroup radioGroup;
+    private RadioButton deutschBtn, fremdBtn, zufallBtn;
 
 
     @Override
@@ -37,6 +49,39 @@ public class MainActivity extends AppCompatActivity {
         plusBtn = findViewById(R.id.floatingActionButton);
         editListBtn = findViewById(R.id.floatingActionButton2);
 
+        radioGroup = findViewById(R.id.radioGroup);
+        deutschBtn = findViewById(R.id.radioButton);
+        fremdBtn = findViewById(R.id.radioButton2);
+        zufallBtn = findViewById(R.id.radioButton3);
+
+        spinner = findViewById(R.id.spinnerLanguage);
+
+        String[] languages = {"Englisch", "Spanisch", "Französisch"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                languages
+        );
+
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                language = parent.getItemAtPosition(position).toString();
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            language = "Englisch";
+            }
+        });
+
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +94,17 @@ public class MainActivity extends AppCompatActivity {
         lerneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, LearnVocabActivity.class);
+
+                if (deutschBtn.isChecked()) {
+                    intent.putExtra("mode", "deutsch");
+                } else if (fremdBtn.isChecked()) {
+                    intent.putExtra("mode", "fremd");
+                } else {
+                    intent.putExtra("mode", "zufall");
+                }
+
                 startActivity(intent);
             }
         });
