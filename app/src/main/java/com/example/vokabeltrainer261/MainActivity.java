@@ -3,10 +3,7 @@ package com.example.vokabeltrainer261;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,10 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView trainerText;
     private FloatingActionButton plusBtn;
     private FloatingActionButton editListBtn;
-    private Spinner spinner;
-    private DbHelper db;
 
-    static  String language = "Englisch";
+    private DbHelper db = new DbHelper(this);
 
 
     @Override
@@ -35,22 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        db = new DbHelper(this);
+
         vokabelText = findViewById(R.id.textView);
         trainerText = findViewById(R.id.textView1);
-        lerneBtn = findViewById(R.id.button);        plusBtn = findViewById(R.id.floatingActionButton);
+        lerneBtn = findViewById(R.id.button);
+        plusBtn = findViewById(R.id.floatingActionButton);
         editListBtn = findViewById(R.id.floatingActionButton2);
-        spinner = findViewById(R.id.spinnerLanguage);
 
-        String[] languages = {"Englisch", "Spanisch", "Französisch"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                languages
-        );
-
-        spinner.setAdapter(adapter);
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,27 +45,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String selectedLanguage = parent.getItemAtPosition(position).toString();
-
-                if(selectedLanguage.equals("Englisch")){
-                    // Englisch-Lektion laden
-                }
-
-                if(selectedLanguage.equals("Spanisch")){
-                    // Spanisch-Lektion laden
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         lerneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,5 +74,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-
-
