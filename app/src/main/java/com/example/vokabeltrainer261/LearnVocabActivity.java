@@ -24,6 +24,8 @@ public class LearnVocabActivity extends AppCompatActivity {
     private boolean deutsch = false;
     private DbHelper db;
 
+    private String mode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +39,11 @@ public class LearnVocabActivity extends AppCompatActivity {
 
         vokabelText = findViewById(R.id.textViewT5);
 
+        mode = getIntent().getStringExtra("mode");
+
 
         String ersteVokabel;
 
-// suche erste vorhandene Vokabel (falls ID 0 leer ist)
         do {
             ersteVokabel = db.readOther(a);
             if (ersteVokabel == null) {
@@ -49,10 +52,26 @@ public class LearnVocabActivity extends AppCompatActivity {
         } while (ersteVokabel == null && a < 1000);
 
         if (ersteVokabel == null) {
-
             finish();
+            return;
+        }
+
+
+        if (mode.equals("deutsch")) {
+            vokabelText.setText(db.readGerman(a));
+            deutsch = true;
+        } else if (mode.equals("fremd")) {
+            vokabelText.setText(db.readOther(a));
+            deutsch = false;
         } else {
-            vokabelText.setText(ersteVokabel);
+
+            if (Math.random() < 0.5) {
+                vokabelText.setText(db.readGerman(a));
+                deutsch = true;
+            } else {
+                vokabelText.setText(db.readOther(a));
+                deutsch = false;
+            }
         }
 
 
@@ -74,18 +93,36 @@ public class LearnVocabActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                a++;
+
                 String nextVokabel;
 
                 do {
-                    a++;
                     nextVokabel = db.readOther(a);
+                    if (nextVokabel == null) {
+                        a++;
+                    }
                 } while (nextVokabel == null && a < 1000);
 
                 if (nextVokabel == null) {
                     finish();
                 } else {
-                    vokabelText.setText(nextVokabel);
-                    deutsch = false;
+
+                    if (mode.equals("deutsch")) {
+                        vokabelText.setText(db.readGerman(a));
+                        deutsch = true;
+                    } else if (mode.equals("fremd")) {
+                        vokabelText.setText(db.readOther(a));
+                        deutsch = false;
+                    } else {
+                        if (Math.random() < 0.5) {
+                            vokabelText.setText(db.readGerman(a));
+                            deutsch = true;
+                        } else {
+                            vokabelText.setText(db.readOther(a));
+                            deutsch = false;
+                        }
+                    }
                 }
             }
         });

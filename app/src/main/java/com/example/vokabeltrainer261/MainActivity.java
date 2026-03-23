@@ -13,6 +13,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton editListBtn;
 
     private DbHelper db = new DbHelper(this);
+
+    private RadioGroup radioGroup;
+    private RadioButton deutschBtn, fremdBtn, zufallBtn;
 
 
     @Override
@@ -37,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         plusBtn = findViewById(R.id.floatingActionButton);
         editListBtn = findViewById(R.id.floatingActionButton2);
 
+        radioGroup = findViewById(R.id.radioGroup);
+        deutschBtn = findViewById(R.id.radioButton);
+        fremdBtn = findViewById(R.id.radioButton2);
+        zufallBtn = findViewById(R.id.radioButton3);
+
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +59,17 @@ public class MainActivity extends AppCompatActivity {
         lerneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, LearnVocabActivity.class);
+
+                if (deutschBtn.isChecked()) {
+                    intent.putExtra("mode", "deutsch");
+                } else if (fremdBtn.isChecked()) {
+                    intent.putExtra("mode", "fremd");
+                } else {
+                    intent.putExtra("mode", "zufall");
+                }
+
                 startActivity(intent);
             }
         });
