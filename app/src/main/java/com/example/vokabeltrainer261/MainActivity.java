@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView trainerText;
     private FloatingActionButton plusBtn;
     private FloatingActionButton editListBtn;
+    private Button addLektion;
 
     private Spinner spinner;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         deutschBtn = findViewById(R.id.radioButton);
         fremdBtn = findViewById(R.id.radioButton2);
         zufallBtn = findViewById(R.id.radioButton3);
-
+        fremdBtn.setChecked(true);
         spinner = findViewById(R.id.spinnerLanguage);
 
         String[] languages = {"Englisch", "Spanisch", "Französisch"};

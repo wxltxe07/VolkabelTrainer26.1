@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ public class NewVocabMenu1Activity extends AppCompatActivity {
     private Button returnBtn;
     private EditText germanTxt;
     private EditText otherTxt;
+
+    private TextView englishTxt;
     private DbHelper db = new DbHelper(this);
 
     @Override
@@ -31,7 +34,9 @@ public class NewVocabMenu1Activity extends AppCompatActivity {
         returnBtn = findViewById(R.id.button3);
         germanTxt = findViewById(R.id.editTextText);
         otherTxt = findViewById(R.id.editTextText1);
+        englishTxt = findViewById(R.id.textView3);
 
+        englishTxt.setText(MainActivity.language);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

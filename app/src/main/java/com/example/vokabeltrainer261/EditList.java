@@ -62,15 +62,22 @@ public class EditList extends AppCompatActivity {
 
     private void loadVocabFromDB() {
         vocabList.clear();
-        Cursor cursor = db.getReadableDatabase().rawQuery("SELECT * FROM Vocabs", null);
+
+        Cursor cursor = db.getReadableDatabase().rawQuery(
+                "SELECT * FROM Vocabs WHERE lektion = ?",
+                new String[]{String.valueOf(MainActivity.language)}
+        );
+
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String german = cursor.getString(cursor.getColumnIndexOrThrow("german"));
                 String other = cursor.getString(cursor.getColumnIndexOrThrow("other"));
+
                 vocabList.add(new Vocab(id, german, other));
             } while (cursor.moveToNext());
         }
+
         cursor.close();
     }
 }

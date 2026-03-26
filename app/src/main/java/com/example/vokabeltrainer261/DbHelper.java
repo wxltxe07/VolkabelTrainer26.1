@@ -44,6 +44,7 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("german", german);
         values.put("other", other);
+        values.put("lektion", MainActivity.language);
 
         db.insert("Vocabs", null, values);
 
@@ -60,12 +61,13 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public String readGerman(int id){
+         String lektion = MainActivity.language;
         String germanWord = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT german FROM Vocabs WHERE id = ?",
-                new String[]{String.valueOf(id)}
+                "SELECT german FROM Vocabs WHERE id = ? AND lektion = ?",
+                new String[]{String.valueOf(id), String.valueOf(lektion)}
         );
 
         if (cursor.moveToFirst()) {
@@ -79,13 +81,15 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public int readAmount(){
-
+        String lektion = MainActivity.language;
         SQLiteDatabase db = this.getReadableDatabase();
 
         int amount = 0;
 
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Vocabs", null);
-
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM Vocabs WHERE lektion = ?",
+                new String[]{String.valueOf(lektion)}
+        );
         if (cursor.moveToFirst()) {
             amount = cursor.getInt(0);
         }
@@ -100,12 +104,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public String readOther(int id){
+        String lektion = MainActivity.language;
         String otherWord = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
+
         Cursor cursor = db.rawQuery(
-                "SELECT other FROM Vocabs WHERE id = ?",
-                new String[]{String.valueOf(id)}
+                "SELECT other FROM Vocabs WHERE id = ? AND lektion = ?",
+                new String[]{String.valueOf(id), String.valueOf(lektion)}
         );
 
         if (cursor.moveToFirst()) {
