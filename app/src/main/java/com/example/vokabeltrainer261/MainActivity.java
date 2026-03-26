@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fremdBtn.setChecked(true);
+
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
