@@ -16,7 +16,8 @@ public class LearnVocabActivity extends AppCompatActivity {
 
     private Button flipBtn;
     private Button backBtn;
-    private Button nextBtn;
+    private Button rightBtn;
+    private Button wrongBtn;
     private TextView vokabelText;
 
 
@@ -34,8 +35,9 @@ public class LearnVocabActivity extends AppCompatActivity {
         db = new DbHelper(this);
 
         flipBtn = findViewById(R.id.buttonT6);
-        nextBtn = findViewById(R.id.buttonT5);
         backBtn = findViewById(R.id.buttonT4);
+        rightBtn = findViewById(R.id.buttonT5);
+        wrongBtn = findViewById(R.id.buttonT7);
 
         vokabelText = findViewById(R.id.textViewT5);
 
@@ -89,9 +91,64 @@ public class LearnVocabActivity extends AppCompatActivity {
         });
 
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int b;
+
+                b = db.readScore(a);
+                b ++;
+                db.updateScore(b,a);
+
+                a++;
+
+                String nextVokabel;
+
+                do {
+                    nextVokabel = db.readOther(a);
+                    if (nextVokabel == null) {
+                        a++;
+                    }
+                } while (nextVokabel == null && a < 1000);
+
+                if (nextVokabel == null) {
+                    finish();
+                } else {
+
+                    if (mode.equals("deutsch")) {
+                        vokabelText.setText(db.readGerman(a));
+                        deutsch = true;
+                    } else if (mode.equals("fremd")) {
+                        vokabelText.setText(db.readOther(a));
+                        deutsch = false;
+                    } else {
+                        if (Math.random() < 0.5) {
+                            vokabelText.setText(db.readGerman(a));
+                            deutsch = true;
+                        } else {
+                            vokabelText.setText(db.readOther(a));
+                            deutsch = false;
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+        wrongBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int b;
+
+                b = db.readScore(a);
+                if (b > 0){
+                b --;
+                }
+
+                db.updateScore(b,a);
 
                 a++;
 

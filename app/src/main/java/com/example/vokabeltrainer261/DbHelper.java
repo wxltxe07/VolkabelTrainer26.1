@@ -50,9 +50,9 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateVocab(String german, String other, int id){
+   public void updateVocab(String german, String other, int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
+         ContentValues values = new ContentValues();
         values.put("german", german);
         values.put("other", other);
         db.update("Vocabs", values, "id = ?", new String[]{String.valueOf(id)});
@@ -130,6 +130,35 @@ public class DbHelper extends SQLiteOpenHelper {
     public void deleteVocab(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("Vocabs", "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    public int readScore(int id){
+        int score = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT score FROM Vocabs WHERE id = ?",
+                new String[]{String.valueOf(id)}
+        );
+
+        if (cursor.moveToFirst()) {
+            score = cursor.getInt(cursor.getColumnIndexOrThrow("score"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return score;
+    }
+
+
+
+    public void updateScore(int newScore, int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("score", newScore);
+        db.update("Vocabs", values, "id = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 
