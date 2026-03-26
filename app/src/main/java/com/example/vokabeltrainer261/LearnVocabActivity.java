@@ -19,6 +19,8 @@ public class LearnVocabActivity extends AppCompatActivity {
     private Button rightBtn;
     private Button wrongBtn;
     private TextView vokabelText;
+    private TextView spracheText;
+    private TextView scoreText;
 
 
     private int a = 0;
@@ -41,7 +43,12 @@ public class LearnVocabActivity extends AppCompatActivity {
 
         vokabelText = findViewById(R.id.textViewT5);
 
+        spracheText = findViewById(R.id.textViewT4);
+        scoreText = findViewById(R.id.textViewT6);
+
         mode = getIntent().getStringExtra("mode");
+
+        spracheText.setText(MainActivity.language);
 
 
         String ersteVokabel;
@@ -57,7 +64,7 @@ public class LearnVocabActivity extends AppCompatActivity {
             finish();
             return;
         }
-
+        scoreText.setText(db.readScore(a));
 
         if (mode.equals("deutsch")) {
             vokabelText.setText(db.readGerman(a));
@@ -119,16 +126,20 @@ public class LearnVocabActivity extends AppCompatActivity {
                     if (mode.equals("deutsch")) {
                         vokabelText.setText(db.readGerman(a));
                         deutsch = true;
+                        scoreText.setText(db.readScore(a));
                     } else if (mode.equals("fremd")) {
                         vokabelText.setText(db.readOther(a));
                         deutsch = false;
+                        scoreText.setText(db.readScore(a));
                     } else {
                         if (Math.random() < 0.5) {
                             vokabelText.setText(db.readGerman(a));
                             deutsch = true;
+                            scoreText.setText(db.readScore(a));
                         } else {
                             vokabelText.setText(db.readOther(a));
                             deutsch = false;
+                            scoreText.setText(db.readScore(a));
                         }
                     }
                 }
@@ -168,16 +179,20 @@ public class LearnVocabActivity extends AppCompatActivity {
                     if (mode.equals("deutsch")) {
                         vokabelText.setText(db.readGerman(a));
                         deutsch = true;
+                        scoreText.setText(db.readScore(a));
                     } else if (mode.equals("fremd")) {
                         vokabelText.setText(db.readOther(a));
                         deutsch = false;
+                        scoreText.setText(db.readScore(a));
                     } else {
                         if (Math.random() < 0.5) {
                             vokabelText.setText(db.readGerman(a));
                             deutsch = true;
+                            scoreText.setText(db.readScore(a));
                         } else {
                             vokabelText.setText(db.readOther(a));
                             deutsch = false;
+                            scoreText.setText(db.readScore(a));
                         }
                     }
                 }
