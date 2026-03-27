@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         lerneBtn = findViewById(R.id.button);
         plusBtn = findViewById(R.id.floatingActionButton);
         editListBtn = findViewById(R.id.floatingActionButton2);
-        addLektion = findViewById(R.id.button4);
+
         radioGroup = findViewById(R.id.radioGroup);
         deutschBtn = findViewById(R.id.radioButton);
         fremdBtn = findViewById(R.id.radioButton2);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-            language = "Englisch";
+                language = "Englisch";
             }
         });
 
@@ -112,13 +112,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addLektion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, addLektionActivity.class);
-                startActivity(intent);
-            }
-        });
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
