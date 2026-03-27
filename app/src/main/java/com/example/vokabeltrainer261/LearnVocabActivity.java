@@ -157,7 +157,7 @@ public class LearnVocabActivity extends AppCompatActivity {
 
         if ("schwer".equals(filter)) {
             int score = db.readScore(index);
-            return score <= 5;
+            if (score > 5) return false;
         }
 
         return true;
