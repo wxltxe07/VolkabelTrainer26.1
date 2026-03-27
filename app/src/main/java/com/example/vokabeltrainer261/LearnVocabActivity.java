@@ -14,21 +14,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class LearnVocabActivity extends AppCompatActivity {
 
-    private Button flipBtn;
-    private Button backBtn;
-    private Button rightBtn;
-    private Button wrongBtn;
-    private TextView vokabelText;
-    private TextView spracheText;
-    private TextView scoreText;
-
+    private Button flipBtn, backBtn, rightBtn, wrongBtn;
+    private TextView vokabelText, spracheText, scoreText;
 
     private int a = 0;
     private boolean deutsch = false;
     private DbHelper db;
 
     private String mode;
-
     private String filter;
 
     @Override
@@ -36,24 +29,91 @@ public class LearnVocabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_learn_vocab);
+
         db = new DbHelper(this);
 
+        // Views
         flipBtn = findViewById(R.id.buttonT6);
         backBtn = findViewById(R.id.buttonT4);
         rightBtn = findViewById(R.id.buttonT5);
         wrongBtn = findViewById(R.id.buttonT7);
 
         vokabelText = findViewById(R.id.textViewT5);
-
         spracheText = findViewById(R.id.textViewT4);
         scoreText = findViewById(R.id.textViewT6);
 
+        // Intent Daten
         mode = getIntent().getStringExtra("mode");
-
         filter = getIntent().getStringExtra("filter");
 
-        spracheText.setText(MainActivity.language);
+        if (mode == null) mode = "zufall";
+        if (filter == null) filter = "alle";
 
+        // Sprache anzeigen
+        if (MainActivity.language != null) {
+            spracheText.setText(MainActivity.language);
+        }
+
+        // Erste Vokabel laden
+        loadFirstVocab();
+
+        // Flip
+        flipBtn.setOnClickListener(v -> {
+            if (!deutsch) {
+                vokabelText.setText(db.readGerman(a));
+                deutsch = true;
+            } else {
+                vokabelText.setText(db.readOther(a));
+                deutsch = false;
+            }
+        });
+
+        // Richtig
+        rightBtn.setOnClickListener(v -> {
+            int b = db.readScore(a);
+            b++;
+            db.updateScore(b, a);
+            nextVocab();
+        });
+
+        // Falsch
+        wrongBtn.setOnClickListener(v -> {
+            int b = db.readScore(a);
+            if (b > 0) b--;
+            db.updateScore(b, a);
+            nextVocab();
+        });
+
+        // Zurück
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(LearnVocabActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainT4), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+
+    // 🔥 Erste gültige Vokabel finden
+    private void loadFirstVocab() {
+        while (!isValidVocab(a) && a < 1000) {
+            a++;
+        }
+
+        if (a >= 1000) {
+            finish();
+            return;
+        }
+
+        showVocab();
+    }
+
+    // 🔥 Nächste Vokabel
+    private void nextVocab() {
+        a++;
 
         while (!isValidVocab(a) && a < 1000) {
             a++;
@@ -63,16 +123,23 @@ public class LearnVocabActivity extends AppCompatActivity {
             finish();
             return;
         }
-        scoreText.setText(db.readScore(a));
 
-        if (mode.equals("deutsch")) {
+        showVocab();
+    }
+
+    // 🔥 Anzeige-Logik zentral
+    private void showVocab() {
+        scoreText.setText(String.valueOf(db.readScore(a)));
+
+        if ("deutsch".equals(mode)) {
             vokabelText.setText(db.readGerman(a));
             deutsch = true;
-        } else if (mode.equals("fremd")) {
+
+        } else if ("fremd".equals(mode)) {
             vokabelText.setText(db.readOther(a));
             deutsch = false;
-        } else {
 
+        } else {
             if (Math.random() < 0.5) {
                 vokabelText.setText(db.readGerman(a));
                 deutsch = true;
@@ -81,145 +148,18 @@ public class LearnVocabActivity extends AppCompatActivity {
                 deutsch = false;
             }
         }
-
-
-        flipBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!deutsch){
-                    vokabelText.setText(db.readGerman(a));
-                    deutsch = true;
-                } else {
-                    vokabelText.setText(db.readOther(a));
-                    deutsch = false;
-                }
-            }
-        });
-
-
-        rightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int b;
-
-                b = db.readScore(a);
-                b ++;
-                db.updateScore(b,a);
-
-                a++;
-
-                while (!isValidVocab(a) && a < 1000) {
-                    a++;
-                }
-
-                if (a >= 1000) {
-                    finish();
-                    return;
-                } else {
-
-                    if (mode.equals("deutsch")) {
-                        vokabelText.setText(db.readGerman(a));
-                        deutsch = true;
-                        scoreText.setText(db.readScore(a));
-                    } else if (mode.equals("fremd")) {
-                        vokabelText.setText(db.readOther(a));
-                        deutsch = false;
-                        scoreText.setText(db.readScore(a));
-                    } else {
-                        if (Math.random() < 0.5) {
-                            vokabelText.setText(db.readGerman(a));
-                            deutsch = true;
-                            scoreText.setText(db.readScore(a));
-                        } else {
-                            vokabelText.setText(db.readOther(a));
-                            deutsch = false;
-                            scoreText.setText(db.readScore(a));
-                        }
-                    }
-                }
-            }
-        });
-
-
-
-        wrongBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int b;
-
-                b = db.readScore(a);
-                if (b > 0){
-                b --;
-                }
-
-                db.updateScore(b,a);
-
-                a++;
-
-                while (!isValidVocab(a) && a < 1000) {
-                    a++;
-                }
-
-                if (a >= 1000) {
-                    finish();
-                    return;
-                } else {
-
-                    if (mode.equals("deutsch")) {
-                        vokabelText.setText(db.readGerman(a));
-                        deutsch = true;
-                        scoreText.setText(db.readScore(a));
-                    } else if (mode.equals("fremd")) {
-                        vokabelText.setText(db.readOther(a));
-                        deutsch = false;
-                        scoreText.setText(db.readScore(a));
-                    } else {
-                        if (Math.random() < 0.5) {
-                            vokabelText.setText(db.readGerman(a));
-                            deutsch = true;
-                            scoreText.setText(db.readScore(a));
-                        } else {
-                            vokabelText.setText(db.readOther(a));
-                            deutsch = false;
-                            scoreText.setText(db.readScore(a));
-                        }
-                    }
-                }
-            }
-        });
-
-
-
-
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LearnVocabActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainT4), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
 
+    // 🔥 Filter + Validierung kombiniert
     private boolean isValidVocab(int index) {
         String vokabel = db.readOther(index);
         if (vokabel == null) return false;
 
-        if (filter.equals("schwer")) {
+        if ("schwer".equals(filter)) {
             int score = db.readScore(index);
             return score <= 5;
         }
 
-        return true; // alle
+        return true;
     }
 }
