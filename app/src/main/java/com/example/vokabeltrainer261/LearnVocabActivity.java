@@ -32,7 +32,7 @@ public class LearnVocabActivity extends AppCompatActivity {
 
         db = new DbHelper(this);
 
-        // Views
+
         flipBtn = findViewById(R.id.buttonT6);
         backBtn = findViewById(R.id.buttonT4);
         rightBtn = findViewById(R.id.buttonT5);
@@ -42,22 +42,22 @@ public class LearnVocabActivity extends AppCompatActivity {
         spracheText = findViewById(R.id.textViewT4);
         scoreText = findViewById(R.id.textViewT6);
 
-        // Intent Daten
+
         mode = getIntent().getStringExtra("mode");
         filter = getIntent().getStringExtra("filter");
 
         if (mode == null) mode = "zufall";
         if (filter == null) filter = "alle";
 
-        // Sprache anzeigen
+
         if (MainActivity.language != null) {
             spracheText.setText(MainActivity.language);
         }
 
-        // Erste Vokabel laden
+
         loadFirstVocab();
 
-        // Flip
+
         flipBtn.setOnClickListener(v -> {
             if (!deutsch) {
                 vokabelText.setText(db.readGerman(a));
@@ -68,7 +68,7 @@ public class LearnVocabActivity extends AppCompatActivity {
             }
         });
 
-        // Richtig
+
         rightBtn.setOnClickListener(v -> {
             int b = db.readScore(a);
             b++;
@@ -76,7 +76,7 @@ public class LearnVocabActivity extends AppCompatActivity {
             nextVocab();
         });
 
-        // Falsch
+
         wrongBtn.setOnClickListener(v -> {
             int b = db.readScore(a);
             if (b > 0) b--;
@@ -84,7 +84,7 @@ public class LearnVocabActivity extends AppCompatActivity {
             nextVocab();
         });
 
-        // Zurück
+
         backBtn.setOnClickListener(v -> {
             Intent intent = new Intent(LearnVocabActivity.this, MainActivity.class);
             startActivity(intent);
@@ -97,7 +97,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         });
     }
 
-    // 🔥 Erste gültige Vokabel finden
+
     private void loadFirstVocab() {
         while (!isValidVocab(a) && a < 1000) {
             a++;
@@ -111,7 +111,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         showVocab();
     }
 
-    // 🔥 Nächste Vokabel
+
     private void nextVocab() {
         a++;
 
@@ -127,7 +127,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         showVocab();
     }
 
-    // 🔥 Anzeige-Logik zentral
+
     private void showVocab() {
         scoreText.setText(String.valueOf(db.readScore(a)));
 
@@ -150,7 +150,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         }
     }
 
-    // 🔥 Filter + Validierung kombiniert
+
     private boolean isValidVocab(int index) {
         String vokabel = db.readOther(index);
         if (vokabel == null) return false;
