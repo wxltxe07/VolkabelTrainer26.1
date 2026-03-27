@@ -35,13 +35,13 @@ private EditText addTxt;
             }
         });
 
-       /* addBtn.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String s = addTxt.getText().toString();
-                MainActivity.languages.add(s);
+                MainActivity.languagesList.add(s);
             }
-        }); */
+        });
 
 
 
