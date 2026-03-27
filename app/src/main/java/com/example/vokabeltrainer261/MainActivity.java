@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
     private RadioButton deutschBtn, fremdBtn, zufallBtn;
+    private RadioGroup radioGroupT1;
+    private RadioButton alleBtn, schwereBtn;
 
 
     @Override
@@ -56,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         zufallBtn = findViewById(R.id.radioButton3);
         fremdBtn.setChecked(true);
         spinner = findViewById(R.id.spinnerLanguage);
+        radioGroupT1 = findViewById(R.id.radioGroupT1);
+        alleBtn = findViewById(R.id.radioButtonT2);
+        schwereBtn = findViewById(R.id.radioButtonT3);
 
         String[] languages = {"Englisch", "Spanisch", "Französisch"};
 
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fremdBtn.setChecked(true);
+        alleBtn.setChecked(true);
 
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("mode", "fremd");
                 } else {
                     intent.putExtra("mode", "zufall");
+                }
+
+                if (schwereBtn.isChecked()) {
+                    intent.putExtra("filter", "schwer");
+                } else {
+                    intent.putExtra("filter", "alle");
                 }
 
                 startActivity(intent);

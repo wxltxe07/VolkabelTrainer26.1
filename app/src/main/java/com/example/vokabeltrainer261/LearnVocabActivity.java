@@ -29,6 +29,8 @@ public class LearnVocabActivity extends AppCompatActivity {
 
     private String mode;
 
+    private String filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,19 +50,16 @@ public class LearnVocabActivity extends AppCompatActivity {
 
         mode = getIntent().getStringExtra("mode");
 
+        filter = getIntent().getStringExtra("filter");
+
         spracheText.setText(MainActivity.language);
 
 
-        String ersteVokabel;
+        while (!isValidVocab(a) && a < 1000) {
+            a++;
+        }
 
-        do {
-            ersteVokabel = db.readOther(a);
-            if (ersteVokabel == null) {
-                a++;
-            }
-        } while (ersteVokabel == null && a < 1000);
-
-        if (ersteVokabel == null) {
+        if (a >= 1000) {
             finish();
             return;
         }
@@ -110,17 +109,13 @@ public class LearnVocabActivity extends AppCompatActivity {
 
                 a++;
 
-                String nextVokabel;
+                while (!isValidVocab(a) && a < 1000) {
+                    a++;
+                }
 
-                do {
-                    nextVokabel = db.readOther(a);
-                    if (nextVokabel == null) {
-                        a++;
-                    }
-                } while (nextVokabel == null && a < 1000);
-
-                if (nextVokabel == null) {
+                if (a >= 1000) {
                     finish();
+                    return;
                 } else {
 
                     if (mode.equals("deutsch")) {
@@ -163,17 +158,13 @@ public class LearnVocabActivity extends AppCompatActivity {
 
                 a++;
 
-                String nextVokabel;
+                while (!isValidVocab(a) && a < 1000) {
+                    a++;
+                }
 
-                do {
-                    nextVokabel = db.readOther(a);
-                    if (nextVokabel == null) {
-                        a++;
-                    }
-                } while (nextVokabel == null && a < 1000);
-
-                if (nextVokabel == null) {
+                if (a >= 1000) {
                     finish();
+                    return;
                 } else {
 
                     if (mode.equals("deutsch")) {
@@ -218,5 +209,17 @@ public class LearnVocabActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private boolean isValidVocab(int index) {
+        String vokabel = db.readOther(index);
+        if (vokabel == null) return false;
+
+        if (filter.equals("schwer")) {
+            int score = db.readScore(index);
+            return score <= 5;
+        }
+
+        return true; // alle
     }
 }
