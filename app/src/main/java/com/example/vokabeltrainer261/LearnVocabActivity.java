@@ -79,7 +79,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         // Falsch
         wrongBtn.setOnClickListener(v -> {
             int b = db.readScore(a);
-            if (b > 0) b--;
+            if (b > 0) b = 0;
             db.updateScore(b, a);
             nextVocab();
         });
@@ -97,7 +97,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         });
     }
 
-    // 🔥 Erste gültige Vokabel finden
+
     private void loadFirstVocab() {
         while (!isValidVocab(a) && a < 1000) {
             a++;
@@ -111,7 +111,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         showVocab();
     }
 
-    // 🔥 Nächste Vokabel
+
     private void nextVocab() {
         a++;
 
@@ -127,7 +127,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         showVocab();
     }
 
-    // 🔥 Anzeige-Logik zentral
+
     private void showVocab() {
         scoreText.setText(String.valueOf(db.readScore(a)));
 
@@ -150,7 +150,7 @@ public class LearnVocabActivity extends AppCompatActivity {
         }
     }
 
-    // 🔥 Filter + Validierung kombiniert
+
     private boolean isValidVocab(int index) {
         String vokabel = db.readOther(index);
         if (vokabel == null) return false;
