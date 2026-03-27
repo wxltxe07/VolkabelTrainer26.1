@@ -35,6 +35,16 @@ private EditText addTxt;
             }
         });
 
+       /* addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = addTxt.getText().toString();
+                MainActivity.languages.add(s);
+            }
+        }); */
+
+
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main16), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
