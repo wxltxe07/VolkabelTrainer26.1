@@ -139,7 +139,7 @@ public class LearnVocabActivity extends AppCompatActivity {
             return;
         }
 
-        scoreText.setText(String.valueOf(vocab.getScore()));
+        scoreText.setText("Score:" + String.valueOf(vocab.getScore()));
 
         if ("deutsch".equals(mode)) {
             vokabelText.setText(vocab.getGerman());
