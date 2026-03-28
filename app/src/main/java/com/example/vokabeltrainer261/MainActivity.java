@@ -25,8 +25,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     private Button lerneBtn;
-    static ArrayList<String> languagesList = new ArrayList<>(Arrays.asList("Englisch", "Spanisch", "Französisch"));
-
+    static ArrayList<String> languagesList;
     private TextView vokabelText;
     private TextView trainerText;
     private FloatingActionButton plusBtn;
@@ -37,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
     static String language;
     private RadioGroup radioGroup;
     private RadioButton deutschBtn, fremdBtn, zufallBtn;
+
+    private RadioGroup difficultGroup;
+
+    private RadioButton allBtn, midBtn, hardBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +54,17 @@ public class MainActivity extends AppCompatActivity {
         plusBtn = findViewById(R.id.floatingActionButton);
         editListBtn = findViewById(R.id.floatingActionButton2);
         addLektion = findViewById(R.id.button4);
-        radioGroup = findViewById(R.id.radioGroup);
+        radioGroup = findViewById(R.id.radioGroupMode);
         deutschBtn = findViewById(R.id.radioButton);
         fremdBtn = findViewById(R.id.radioButton2);
         zufallBtn = findViewById(R.id.radioButton3);
         spinner = findViewById(R.id.spinnerLanguage);
+        hardBtn = findViewById(R.id.radioButtonT2);
+        midBtn = findViewById(R.id.radioButtonT3);
+        allBtn = findViewById(R.id.radioButtonT4);
+        difficultGroup = findViewById(R.id.radioGroupT1);
 
+        languagesList = db.fillList();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -78,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fremdBtn.setChecked(true);
+        allBtn.setChecked(true);
 
         editListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("mode", "fremd");
                 } else {
                     intent.putExtra("mode", "zufall");
+                }
+                if (hardBtn.isChecked()){
+                    intent.putExtra("filter","hard");
+                } else if (midBtn.isChecked()) {
+                    intent.putExtra("filter","mid");
+                } else {
+                    intent.putExtra("filter","all");
                 }
                 startActivity(intent);
             }

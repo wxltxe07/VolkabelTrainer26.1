@@ -41,8 +41,7 @@ public class EditList extends AppCompatActivity {
 
 
         returnBtn2.setOnClickListener(v -> {
-            Intent intent = new Intent(EditList.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
 
 
@@ -74,7 +73,7 @@ public class EditList extends AppCompatActivity {
                 String german = cursor.getString(cursor.getColumnIndexOrThrow("german"));
                 String other = cursor.getString(cursor.getColumnIndexOrThrow("other"));
 
-                vocabList.add(new Vocab(id, german, other));
+                vocabList.add(new Vocab(id, german, other, EditList.this));
             } while (cursor.moveToNext());
         }
 

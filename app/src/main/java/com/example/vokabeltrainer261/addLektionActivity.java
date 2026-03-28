@@ -30,16 +30,19 @@ private EditText addTxt;
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(addLektionActivity.this, MainActivity.class);
-                startActivity(intent);
+               finish();
             }
         });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(addTxt.getText().toString().isEmpty()){
+                    return;
+                }
                 String s = addTxt.getText().toString();
                 MainActivity.languagesList.add(s);
+                addTxt.setText("");
             }
         });
 

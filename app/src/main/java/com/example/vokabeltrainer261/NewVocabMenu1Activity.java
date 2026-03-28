@@ -40,6 +40,9 @@ public class NewVocabMenu1Activity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (germanTxt.getText().toString().isEmpty() || otherTxt.getText().toString().isEmpty()) {
+                    return;
+                }
                 db.addVocab(germanTxt.getText().toString(),otherTxt.getText().toString());
                 germanTxt.setText("");
                 otherTxt.setText("");
@@ -49,8 +52,7 @@ public class NewVocabMenu1Activity extends AppCompatActivity {
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NewVocabMenu1Activity.this, MainActivity.class);
-                startActivity(intent);
+               finish();
             }
         });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main2), (v, insets) -> {

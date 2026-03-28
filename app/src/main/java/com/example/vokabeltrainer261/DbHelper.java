@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -23,8 +26,8 @@ public class DbHelper extends SQLiteOpenHelper {
         String createTable =
                 "CREATE TABLE IF NOT EXISTS Vocabs (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "german TEXT NOT NULL," +
-                        "other TEXT NOT NULL," +
+                        "german TEXT," +
+                        "other TEXT," +
                         "lektion INTEGER DEFAULT 0," +
                         "score INTEGER DEFAULT 0)";
 
@@ -34,7 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // später für Updates
+
     }
 
     public void addVocab(String german, String other) {
@@ -168,5 +171,41 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList<String> fillList(){
+        ArrayList<String> startList = new ArrayList<>();
+        String s = "Englisch";
+        startList.add(s);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT lektion FROM Vocabs",
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            String lektion = cursor.getString(cursor.getColumnIndexOrThrow("lektion"));
+            if (!startList.contains(lektion)) {
+                startList.add(lektion);
+            }
+        }
+        if(!startList.contains(s)){
+            startList.add(s);
+        }
+
+        cursor.close();
+        db.close();
+
+
+        return startList;
+    }
+
+    public Cursor getAllVocabs(){
+        String lektion = MainActivity.language;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Vocabs WHERE lektion = ?",
+                new String[]{lektion}
+        );
+    }
 
     }

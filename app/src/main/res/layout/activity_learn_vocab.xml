@@ -9,7 +9,8 @@
 
     <TextView
         android:id="@+id/textViewT4"
-        android:layout_width="138dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="51dp"
         android:text="Sprache"
         android:textSize="35sp"
