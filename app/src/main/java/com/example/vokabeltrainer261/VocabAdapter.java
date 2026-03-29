@@ -63,19 +63,39 @@ public class VocabAdapter extends RecyclerView.Adapter<VocabAdapter.ViewHolder> 
 
 
         TextWatcher otherWatcher = new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                vocab.setOther(s.toString());
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (vocab == null || s == null) return;
+
+                String text = s.toString().trim();
+                if (!text.isEmpty()) {
+                    vocab.setOther(text);
+                }
             }
-            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         };
 
         TextWatcher germanWatcher = new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                vocab.setGerman(s.toString());
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (vocab == null || s == null) return;
+
+                String text = s.toString().trim();
+                if (!text.isEmpty()) {
+                    vocab.setGerman(text);
+                }
             }
-            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         };
 
         holder.otherWord.addTextChangedListener(otherWatcher);
